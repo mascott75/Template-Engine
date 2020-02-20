@@ -4,9 +4,17 @@ const Employee = require("./lib/Employee")
 const Intern = require("./lib/Intern")
 const Engineer = require("./lib/Engineer")
 const Manager = require("./lib/Manager")
+var fs = require("fs")
+
+var role;
+var employeeId;
+var employeeEmail;
+var employeeName;
+var employeeExtra;
+getCard()
 
 function getCard(){
-    return inquirer
+    var info = inquirer
     .prompt({
         type: "list",
         message: "Type of Employee:",
@@ -27,22 +35,25 @@ function getCard(){
         type: "input",
         message: "Employee Email:",
         name: "email"
-    })
-    .then(function(inquirer){
-        if(employeeRole === 'Engineer'){
+    }
+    )
+    return info
+    .then(function(res){
+        if(res.employeeRole === 'Engineer'){
             return inquirer
             .prompt({
                 type: "input",
                 message: "Github Username:",
                 name: "github"
             })
-            .then(function(inquirer){
-                var newEmployee = new Engineer(name, id, email, github)
-                var role = newEmployee.getRole();
-                var employeeName = newEmployee.getName();
-                var employeeId = newEmployee.getId();
-                var employeeEmail = newEmployee.getEmail();
-                var employeeExtra = newEmployee.getGithub();
+            .then(function(res2){
+                var newEmployee = new Engineer(res.name, res.id, res.email, res2.github)
+                role = newEmployee.getRole();
+                employeeName = newEmployee.getName();
+                employeeId = newEmployee.getId();
+                employeeEmail = newEmployee.getEmail();
+                employeeExtra = "Github: " + newEmployee.getGithub();
+                console.log(employeeEmail)
             })
         }
         else if(employeeRole === 'Intern'){
@@ -52,13 +63,13 @@ function getCard(){
                 message: "School:",
                 name: "school"
             })
-            .then(function(inquirer){
-                var newEmployee = new Engineer(name, id, email, school)
-                var role = newEmployee.getRole();
-                var employeeName = newEmployee.getName();
-                var employeeId = newEmployee.getId();
-                var employeeEmail = newEmployee.getEmail();
-                var employeeExtra = newEmployee.getSchool();
+            .then(function(res2){
+                 newEmployee = new Engineer(name, id, email, school)
+                 role = newEmployee.getRole();
+                 employeeName = newEmployee.getName();
+                 employeeId = newEmployee.getId();
+                 employeeEmail = newEmployee.getEmail();
+                 employeeExtra = "School: " + newEmployee.getSchool();
             })
         }
         else if(employeeRole === 'Manager'){
@@ -68,15 +79,22 @@ function getCard(){
                 message: "Office Number:",
                 name: "office"
             })
-            .then(function(inquirer){
-                var newEmployee = new Engineer(name, id, email, office)
-                var role = newEmployee.getRole();
-                var employeeName = newEmployee.getName();
-                var employeeId = newEmployee.getId();
-                var employeeEmail = newEmployee.getEmail();
-                var employeeExtra = newEmployee.getOfficeNumber();
+            .then(function(res2){
+                 newEmployee = new Engineer(name, id, email, office)
+                 role = newEmployee.getRole();
+                 employeeName = newEmployee.getName();
+                 employeeId = newEmployee.getId();
+                 employeeEmail = newEmployee.getEmail();
+                 employeeExtra = "Office Number: " + newEmployee.getOfficeNumber();
             })
         }
+        var fileRout = "templates/" + role + ".html"
+        var template = fs.readFile(fileRout, "utf8", function(error, data) {
+            if (error) {
+              return console.log(error);
+            }
+                      console.log(data);
+        });
     })
 }
 
