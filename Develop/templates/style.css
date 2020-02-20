@@ -1,0 +1,26 @@
+#top-row {
+    background-color: black;
+    border: solid white;
+    border-radius: 10px;
+    color: white;
+}
+
+.card {
+    background-color: rgb(25, 3, 61);
+    border: solid black;
+    border-width: 6px;
+}
+
+#info {
+    border: solid white;
+    border-width: 3px;
+    border-radius: 10px;
+    height: fit-content;
+}
+
+.info {
+    background-color: black;
+    border-bottom: solid white;
+    border-width: 6px;
+    color: white;
+}
